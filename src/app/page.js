@@ -1,102 +1,286 @@
+'use client';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Logo from "@/app/img/scaletrail.svg"
+import { Check } from "lucide-react";
 
-export default function Home() {
+
+export default function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Navbar */}
+      <header className="w-full border-b bg-background sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          {/* Logo */}
+          <h1
+            style={{ letterSpacing: -2, fontSize: 28 }}
+            className="flex items-baseline gap-1 text-2xl font-bold bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 bg-clip-text text-transparent"
+          >
+            ScaleTrail
+            <Image src={Logo} alt="ScaleTrail logo" width={30} height={30} className="relative top-[1px]" />
+          </h1>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#" className="text-sm font-medium hover:text-blue-500">Home</a>
+            <a href="#pricing" className="text-sm font-medium hover:text-blue-500">Pricing</a>
+            <a href="#faq" className="text-sm font-medium hover:text-blue-500">FAQ</a>
+          </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Desktop Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button variant="outline">Log In</Button>
+            <Button>Sign Up</Button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-muted"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        {/* Mobile Nav Menu */}
+        {menuOpen && (
+          <div className="md:hidden border-t bg-background px-6 py-4 flex flex-col gap-4">
+            <a href="#" className="text-sm font-medium hover:text-blue-500">Home</a>
+            <a href="#pricing" className="text-sm font-medium hover:text-blue-500">Pricing</a>
+            <a href="#faq" className="text-sm font-medium hover:text-blue-500">FAQ</a>
+            <div className="flex gap-3 pt-2">
+              <Button variant="outline" className="flex-1">Log In</Button>
+              <Button className="flex-1">Sign Up</Button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center flex-1 text-center px-6 py-20">
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-blue-500 via-blue-300 to-pink-500 bg-clip-text text-transparent">
+          ScaleTrail
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+          Helping early-stage businesses scale smarter — from infrastructure, to
+          sales, to hiring.
+        </p>
+        <div className="mt-8 flex gap-4">
+          <Button size="lg">Get Started</Button>
+          <Button size="lg" variant="outline">
+            Learn More
+          </Button>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="px-6 py-20 bg-muted/30">
+        <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-3">
+          <Card className="rounded-2xl shadow-sm">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-semibold mb-3">Infrastructure</h3>
+              <p className="text-muted-foreground">
+                Build a rock-solid foundation with cloud, security, and scalable
+                systems tailored to your growth.
+              </p>
+              <ul>
+                <li>Terraform Templates for Linode, AWS, and GCP</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl shadow-sm">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-semibold mb-3">Sales</h3>
+              <p className="text-muted-foreground">
+                Accelerate revenue with proven playbooks, CRM optimization, and
+                go-to-market strategy.
+              </p>
+              <ul>
+                <li>CRM Integrations</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl shadow-sm">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-semibold mb-3">Hiring</h3>
+              <p className="text-muted-foreground">
+                Attract and retain the right talent with processes that scale as
+                quickly as your company does.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="px-6 py-20 text-center" id="pricing">
+        <h2 className="text-3xl font-bold mb-4">
+          Ready to scale your startup?
+        </h2>
+        <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+          Join dozens of founders who trust ScaleTrail to guide them from seed
+          stage to success.
+        </p>
+        <Button size="lg">Book a Demo</Button>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="px-6 py-20">
+        <div className="max-w-6xl mx-auto text-center mb-12">
+          <h2 className="text-3xl font-bold">Simple, founder-friendly pricing</h2>
+          <p className="text-muted-foreground mt-2">
+            Start free. Upgrade as you grow. No lock-in.
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* Free */}
+          <Card className="rounded-2xl shadow-sm flex flex-col">
+            <CardHeader>
+              <CardTitle>Free</CardTitle>
+              <CardDescription>For hackers & idea-stage teams</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-4xl font-extrabold tracking-tight">$0</div>
+              <ul className="space-y-2 text-sm text-left">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 mt-0.5" />
+                  Core templates (infra, GTM, hiring)
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 mt-0.5" />
+                  1–2 integrations (e.g., Jira or Notion)
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 mt-0.5" />
+                  3 seats included
+                </li>
+              </ul>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button className="w-full" variant="outline">Get Started</Button>
+            </CardFooter>
+          </Card>
+
+          {/* Starter */}
+          <Card className="rounded-2xl shadow-sm flex flex-col">
+            <CardHeader>
+              <CardTitle>Starter</CardTitle>
+              <CardDescription>Seed-ready operations in a box</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-4xl font-extrabold tracking-tight">
+                $79<span className="text-base font-medium text-muted-foreground">/mo</span>
+              </div>
+              <ul className="space-y-2 text-sm text-left">
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Unlimited templates</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> 5–10 integrations</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Founder dashboard</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Up to 10 seats</li>
+              </ul>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button className="w-full">Start Trial</Button>
+            </CardFooter>
+          </Card>
+
+          {/* Growth (Most Popular) */}
+          <Card className="rounded-2xl shadow-sm border-blue-200 dark:border-blue-400 flex flex-col relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <Badge className="rounded-full px-3 py-1 text-xs">Most Popular</Badge>
+            </div>
+            <CardHeader>
+              <CardTitle>Growth</CardTitle>
+              <CardDescription>Scale from 10 → 25+ people</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-4xl font-extrabold tracking-tight">
+                $249<span className="text-base font-medium text-muted-foreground">/mo</span>
+              </div>
+              <ul className="space-y-2 text-sm text-left">
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Advanced workflows & API</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Deeper CRM/ATS integrations</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Analytics & reporting</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Priority support</li>
+              </ul>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button className="w-full">Choose Growth</Button>
+            </CardFooter>
+          </Card>
+
+          {/* Pro */}
+          <Card className="rounded-2xl shadow-sm flex flex-col">
+            <CardHeader>
+              <CardTitle>Pro</CardTitle>
+              <CardDescription>Serious ops for 25–100 employees</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-4xl font-extrabold tracking-tight">
+                $799<span className="text-base font-medium text-muted-foreground">/mo</span>
+              </div>
+              <ul className="space-y-2 text-sm text-left">
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> SSO/SOC2 & security controls</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Custom playbooks & mappings</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> White-glove onboarding</li>
+                <li className="flex items-start gap-2"><Check className="h-4 w-4 mt-0.5" /> Up to 100 seats</li>
+              </ul>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button className="w-full" variant="secondary">Talk to Sales</Button>
+            </CardFooter>
+          </Card>
+        </div>
+
+        {/* Enterprise band */}
+        <div className="max-w-6xl mx-auto mt-6">
+          <Card className="rounded-2xl shadow-sm">
+            <CardContent className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-semibold">Enterprise</h3>
+                <p className="text-sm text-muted-foreground">
+                  Series B+ scaleups needing custom workflows, security reviews, and SLAs.
+                </p>
+              </div>
+              <div className="text-left md:text-right">
+                <div className="text-lg font-bold">Custom pricing</div>
+                <p className="text-sm text-muted-foreground">Security, compliance, & dedicated success</p>
+              </div>
+              <Button size="lg">Contact Sales</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="px-6 py-20 max-w-4xl mx-auto" id="faq">
+        <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-lg font-semibold">How does ScaleTrail work?</h3>
+            <p className="text-muted-foreground">
+              We provide tailored strategies and resources to help startups grow across infrastructure, sales, and hiring.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">Can I try before committing?</h3>
+            <p className="text-muted-foreground">
+              Yes — book a demo with us to see how ScaleTrail can fit your needs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-6 border-t text-center text-sm text-muted-foreground">
+        © {new Date().getFullYear()} ScaleTrail. All rights reserved.
       </footer>
     </div>
   );
